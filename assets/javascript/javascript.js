@@ -34,7 +34,7 @@ $('#add-animal').on('click', function(event) {
 $('.button-class').on('click', function() {
 	$('#gif-col').empty();
 	var animalData = $(this).attr('data-animal');
-    var queryURL = 'http://api.giphy.com/v1/gifs/search?q=' + animalData + '&api_key=dc6zaTOxFJmzC&limit=10&rating=g&rating=pg&rating=pg-13';
+    var queryURL = 'https://api.giphy.com/v1/gifs/search?q=' + animalData + '&api_key=dc6zaTOxFJmzC&limit=10&rating=g&rating=pg&rating=pg-13';
     $.ajax({url: queryURL, method: 'GET'})
     	.done(function(response) {
         	var results = response.data;
@@ -69,7 +69,7 @@ $('.button-class').on('click', function() {
 
 	var animalData = $(this).attr('data-animal');
 
-    var queryURL = 'http://api.giphy.com/v1/gifs/search?q=' + animalData + '&api_key=dc6zaTOxFJmzC&limit=10&rating=g&rating=pg&rating=pg-13';
+    var queryURL = 'https://api.giphy.com/v1/gifs/search?q=' + animalData + '&api_key=dc6zaTOxFJmzC&limit=10&rating=g&rating=pg&rating=pg-13';
 
     $.ajax({url: queryURL, method: 'GET'})
     	.done(function(response) {

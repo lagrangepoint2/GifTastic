@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+    width: 85%;
+    margin: 0 auto;
+    padding: 0 auto;
+
+}
+
+button {
+	margin: 10px;
+}
+
+.row {
+	margin-bottom: 15px;
+}
+
+.animal-item {
+	display: inline-block;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+
+

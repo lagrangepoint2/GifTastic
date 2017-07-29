@@ -2,8 +2,6 @@ $(document).ready(function(){
 //Variable Section
 var animalArray = ['dog', 'cat', 'rabbit', 'hamster', 'skunk', 'goldfish', 'bird', 'ferret', 'turtle', 'sugar glider', 'chinchilla', 'hedgehog', 'hermit crab', 'gerbil', 'pygmy goat', 'chicken', 'duck', 'capybara', 'teacup pig', 'serval', 'salamander', 'frog'];
 
-// console.log(animalArray);
-
 makeButtons();
 
 //Function Section++++++++++++++++++++++++++++++++
@@ -18,7 +16,6 @@ function makeButtons() {
         tempButton.text(animalArray[i]);
         $('#button-div').append(tempButton);
     }
-
 }//End makeButtons function
 
 //On click function to add new animal button
@@ -29,42 +26,10 @@ $('#add-animal').on('click', function(event) {
     animalArray.push(tempAnimal);
 
     makeButtons();
-
-//button-class on click function*******************************
-$('.button-class').on('click', function() {
-	$('#gif-col').empty();
-	var animalData = $(this).attr('data-animal');
-    var queryURL = 'https://api.giphy.com/v1/gifs/search?q=' + animalData + '&api_key=dc6zaTOxFJmzC&limit=10&rating=g&rating=pg&rating=pg-13';
-    $.ajax({url: queryURL, method: 'GET'})
-    	.done(function(response) {
-        	var results = response.data;
-        	for (var j = 0; j < results.length; j++) {
-        		// if (results[i].rating !== 'i') {
-	            	var gifDiv = $("<div class='animal-item'>");
-	            	var rating = results[j].rating;
-	            	var p = $('<p>').text('Rating: ' + rating);
-	            	var animalDataImage = $('<img>');
-	            	animalDataImage.attr('src', results[j].images.fixed_height.url);
-	            	var sauce = animalDataImage.attr('src');
-	            	console.log('sauce: ', sauce);
-	            	var length = animalDataImage.attr('src').length;
-	            	console.log('length: ', length);
-	            	gifDiv.append(p);
-	            	animalDataImage.stop();
-	            	gifDiv.append(animalDataImage);
-
-	            	$('#gif-col').prepend(gifDiv);
-	            // }
-        	}//End for loop
-        });//End .done function
-});//End button listner**********************************************
-
 });//End on click animal button
 
-//button-class on click function
-$('.button-class').on('click', function() {
-	// console.log('clicked');
-	// console.log('animalArray in .button-class', animalArray);
+//button-class on click function*******************************
+$('body').on('click', '.button-class', function() {
 	$('#gif-col').empty();
 
 	var animalData = $(this).attr('data-animal');
@@ -76,51 +41,49 @@ $('.button-class').on('click', function() {
 
         	var results = response.data;
 
-        	// console.log('results: ', results);
-
         	for (var j = 0; j < results.length; j++) {
-        		// if (results[i].rating !== 'i') {
 	            	var gifDiv = $("<div class='animal-item'>");
 
 	            	var rating = results[j].rating;
-
 	            	var p = $('<p>').text('Rating: ' + rating);
-
 	            	var animalDataImage = $('<img>');
 
-	            	animalDataImage.attr('src', results[j].images.fixed_height.url);
-	            	// console.log('animalDataImage: ', animalDataImage);
+                animalDataImage.addClass('gif');
+	            	animalDataImage.attr('src', results[j].images.fixed_height_still.url);
+	            	animalDataImage.attr('data-still', results[j].images.fixed_height_still.url);
+	            	animalDataImage.attr('data-animate', results[j].images.fixed_height.url);
+	            	animalDataImage.attr('data-state', 'still');
 
-	            	var sauce = animalDataImage.attr('src');
-	            	// sauce +'_s';
-	            	console.log('sauce: ', sauce);
-
-	            	var length = animalDataImage.attr('src').length;
-	            	console.log('length: ', length);
+	            	console.log('animalDataImage: ', animalDataImage.attr('data-state'));
 
 	            	gifDiv.append(p);
-	            	animalDataImage.stop();
 	            	gifDiv.append(animalDataImage);
 
 	            	$('#gif-col').prepend(gifDiv);
-	            // }
         	}//End for loop
         });//End .done function
 });//End button listner
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });//End document.ready
 
+//Pause/Resume Function?
+    $('body').on('click', '.gif', function(event) {
+      var imgTarget = event.target;
+      var img = $(imgTarget);
+      console.log(this);
+      console.log(event.target);
+
+      var state = img.attr('data-state');
+      var animateURL = img.attr('data-animate');
+      var stillURL = img.attr('data-still');
+
+      // console.log('click state: ', state);
+
+      if (state === 'still') {
+          img.attr('src', animateURL);
+          img.attr('data-state', 'animate');
+      } else {
+          img.attr('src', stillURL);
+          img.attr('data-state', 'still');
+      }
+    });//End Pause/Resume Function
